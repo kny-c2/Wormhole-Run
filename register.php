@@ -9,7 +9,7 @@ if (isset($_POST['username'])) {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    //Read users.json and turn it into a PHP array
+    // Read users.json and turn it into a PHP array
     $users = json_decode(file_get_contents('users.json'), true);
 
     if ($username === '' || $password === '') {
