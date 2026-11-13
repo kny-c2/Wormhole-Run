@@ -16,7 +16,7 @@ if (isset($_POST['player2'])) {
     } elseif (!in_array($board, ['beginner', 'standard', 'expert'])) {
         $error = 'Please choose a board.';
     } else {
-        // Start a fresh game: this is the "ticket" Devin's game.php reads
+        // Start a new game this is the "ticket" Devin's game.php reads
         $_SESSION['players']    = [$_SESSION['user'], $player2];
         $_SESSION['difficulty'] = $board;
         $_SESSION['positions']  = [0, 0];
