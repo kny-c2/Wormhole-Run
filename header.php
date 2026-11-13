@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <header class="site-header">
+    <!-- Users get different nav options based on if their session shows they are logged in or not-->
     <a href="index.php" class="logo">Wormhole Run</a>
     <nav>
       <?php if (isset($_SESSION['user'])): ?>
