@@ -1,0 +1,77 @@
+:root {
+  --bg: #0b1026;        /* deep space background */
+  --panel: #161d40;     /* boxes and the header bar */
+  --text: #e8ecff;      /* main text */
+  --muted: #9aa3c7;     /* softer text */
+  --accent: #3b7cff;    /* blue: buttons and links */
+  --accent-2: #5c3cea;  /* purple */
+  --danger: #ff6b6b;    /* error messages */
+}
+
+/* ===== Whole page ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent); }
+
+/* ===== Header + nav ===== */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--panel);
+  border-bottom: 2px solid var(--accent-2);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 16px;
+}
+
+.site-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-header nav a:hover {
+  color: var(--text);
+}
+
+/* ===== Main content ===== */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--panel);
+}
