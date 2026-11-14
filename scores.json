@@ -1,1 +1,5 @@
-[]
+[
+  {"name": "Random 1", "rolls": 31},
+  {"name": "Random 2", "rolls": 23},
+  {"name": "Random 3", "rolls": 40}
+]
