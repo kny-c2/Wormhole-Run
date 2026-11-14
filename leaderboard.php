@@ -39,8 +39,8 @@ include 'header.php';
   <?php endif; ?>
 
   <p>
-    <a href="setup.php">Play again</a>
-    <a href="logout.php">Logout</a>
+    <a href="setup.php" class="button">Play again</a>
+    <a href="logout.php" class="button">Logout</a>
   </p>
 </main>
 
