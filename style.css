@@ -1,0 +1,186 @@
+:root {
+  --bg: #0b1026;        /* deep space background */
+  --panel: #161d40;     /* boxes and the header bar */
+  --text: #e8ecff;      /* main text */
+  --muted: #9aa3c7;     /* softer text */
+  --accent: #3b7cff;    /* blue: buttons and links */
+  --accent-2: #5c3cea;  /* purple */
+  --danger: #ff6b6b;    /* error messages */
+}
+
+/* Whole page */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent); }
+
+/* Header + nav */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--panel);
+  border-bottom: 2px solid var(--accent-2);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 16px;
+}
+
+.site-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-header nav a:hover {
+  color: var(--text);
+}
+
+/* Main content */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--panel);
+}
+
+/* Headings */
+h1 { margin-top: 0; }
+
+/* Forms (login, register, setup) */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+  background: var(--panel);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px 12px;
+  border: 1px solid #2a3366;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+fieldset {
+  border: 1px solid #2a3366;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+legend { color: var(--muted); padding: 0 6px; }
+
+fieldset label {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+/* Buttons */
+button,
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 8px;
+  margin-right: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+  background: var(--accent-2);
+}
+
+/* Error messages  */
+.error {
+  color: var(--danger);
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 4px solid var(--danger);
+  padding: 8px 12px;
+}
+
+/* Leaderboard table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--accent-2);
+}
+
+/* Row 1 is the header row, so the #1 player is row 2 */
+tr:nth-child(2) td {
+  color: #ffd166;
+  font-weight: bold;
+}
+
+/* Team page cards */
+section {
+  background: var(--panel);
+  padding: 20px 24px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+section h2 {
+  margin-top: 0;
+  color: var(--accent-2);
+}
