@@ -5,9 +5,9 @@ $error = '';
 $username = '';
 
 // Only runs when the form was submitted 
-if (isset($_POST['username'])) {
-    $username = trim($_POST['username']);
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim(filter_input(INPUT_POST, 'username') ?? '');
+    $password = filter_input(INPUT_POST, 'password') ?? '';
 
     // Read users.json and turn it into a PHP array
     $users = json_decode(file_get_contents('users.json'), true);

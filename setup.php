@@ -7,9 +7,9 @@ $player2 = '';
 $board = 'standard';   // Standard is picked by default
 
 // After Player 2 Gets Chosen, on first load it skips
-if (isset($_POST['player2'])) {
-    $player2 = trim($_POST['player2']);
-    $board = $_POST['board'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $player2 = trim(filter_input(INPUT_POST, 'player2') ?? '');
+    $board = filter_input(INPUT_POST, 'board') ?? '';
 
     if ($player2 === '') {
         $error = 'Please enter a name for Player 2.';

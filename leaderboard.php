@@ -2,8 +2,8 @@
 session_start();
 require 'auth.php';
 
-// Read every score from scores.json
-$scores = json_decode(file_get_contents('scores.json'), true);
+// Scores live in the session - project requirement!
+$scores = $_SESSION['scores'] ?? [];
 
 // Sort by fewest rolls first
 usort($scores, function ($a, $b) {
