@@ -261,8 +261,10 @@ section h2 {
 
 .game-message {
   padding: 12px;
-  background-color: #e5f2ff;
+  background-color: #f1e5ff !important;
+  color: #000000 !important;
   border-radius: 8px;
+  border: 1px solid #9b72cf;
 }
 
 .game-controls {
@@ -275,4 +277,235 @@ section h2 {
   padding: 15px;
   border: 1px solid #888;
   border-radius: 8px;
+}
+
+/*----WINNER POPUP----*/
+
+.winner-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.winner-popup {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 35px 25px;
+
+  text-align: center;
+
+  background: linear-gradient(145deg,
+      #161d40,
+      #30205c);
+
+  border: 2px solid #ffd166;
+  border-radius: 18px;
+
+  box-shadow:
+    0 0 20px rgba(92, 60, 234, 0.7),
+    0 0 50px rgba(255, 209, 102, 0.2);
+}
+
+.winner-trophy {
+  font-size: 65px;
+  margin-bottom: 10px;
+}
+
+.winner-popup h1 {
+  color: #ffd166;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.winner-popup h2 {
+  color: white;
+  font-size: 1.7rem;
+  margin: 10px 0;
+}
+
+.winner-subtitle {
+  color: #c4c9eb;
+  margin-bottom: 25px;
+}
+
+.winner-stats {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.winner-stats p {
+  margin: 8px 0;
+  color: white;
+}
+
+.winner-stats strong {
+  color: #ffd166;
+}
+
+.winner-popup .button {
+  margin: 6px;
+}
+
+@media (max-width: 480px) {
+
+  .winner-popup {
+    padding: 25px 15px;
+  }
+
+  .winner-popup h1 {
+    font-size: 1.6rem;
+  }
+
+  .winner-popup h2 {
+    font-size: 1.3rem;
+  }
+
+  .winner-popup .button {
+    display: block;
+    margin: 10px 0;
+  }
+
+}
+
+/*   WORMHOLE RUN - SIDE BY SIDE GAME LAYOUT */
+
+/* Give the game more horizontal room */
+main.game-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* Board on left, controls on right */
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 25px;
+  align-items: start;
+}
+
+/* LEFT SIDE */
+.game-board-area {
+  min-width: 0;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  gap: 3px;
+  margin: 0;
+}
+
+/* RIGHT SIDE */
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 0;
+}
+
+/* Player cards */
+.game-sidebar .player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-sidebar .player-info h2 {
+  width: 100%;
+}
+
+.game-sidebar .player-card {
+  width: 100%;
+  flex: none;
+}
+
+/* Dice controls */
+.game-sidebar .game-controls {
+  margin: 0;
+  text-align: center;
+}
+
+.game-sidebar .game-controls form {
+  max-width: none;
+  width: 100%;
+}
+
+.game-sidebar .game-controls button {
+  width: 100%;
+  margin-right: 0;
+  padding: 14px;
+  font-size: 1.1rem;
+}
+
+/* Dice result */
+.dice-result {
+  color: #ffd166;
+}
+
+/* Event history */
+.game-sidebar .event-history {
+  margin-top: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+
+/* Smaller screens: stack board and controls */
+@media (max-width: 850px) {
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .game-sidebar {
+    width: 100%;
+  }
+
+  .game-sidebar .player-info {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .game-sidebar .player-card {
+    flex: 1 1 200px;
+  }
+
+}
+
+/* Smaller board cells on phones */
+@media (max-width: 480px) {
+
+  main.game-container {
+    padding: 10px;
+  }
+
+  .game-board {
+    gap: 2px;
+  }
+
+  .board-cell {
+    font-size: 10px;
+  }
+
+  .player-token {
+    font-size: 8px;
+    padding: 1px 3px;
+  }
+
 }

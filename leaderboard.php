@@ -2,7 +2,7 @@
 session_start();
 require 'auth.php';
 
-// Scores live in the session - project requirement!
+// Scores live in the session
 $scores = $_SESSION['scores'] ?? [];
 
 // Sort by fewest rolls first
@@ -15,6 +15,63 @@ $top = array_slice($scores, 0, 10);
 
 include 'header.php';
 ?>
+<?php if ($winnerResult !== null): ?>
+
+    <div class="winner-overlay">
+
+        <div class="winner-popup">
+
+            <div class="winner-trophy">🏆</div>
+
+            <h1>MISSION COMPLETE!</h1>
+
+            <h2>
+                <?php echo htmlspecialchars($winnerResult['name']); ?>
+                WINS!
+            </h2>
+
+            <p class="winner-subtitle">
+                Congratulations! You conquered the galaxy!
+            </p>
+
+            <div class="winner-stats">
+
+                <p>
+                    <strong>Winning Player:</strong>
+                    <?php echo htmlspecialchars($winnerResult['name']); ?>
+                </p>
+
+                <p>
+                    <strong>Total Rolls:</strong>
+                    <?php echo (int) $winnerResult['rolls']; ?>
+                </p>
+
+                <p>
+                    <strong>Board:</strong>
+                    <?php echo htmlspecialchars(ucfirst($winnerResult['difficulty'])); ?>
+                </p>
+
+                <p>
+                    <strong>Final Position:</strong>
+                    100 / 100
+                </p>
+
+            </div>
+
+            <a href="leaderboard.php" class="button">
+                View Leaderboard
+            </a>
+
+            <a href="setup.php" class="button">
+                Play Again
+            </a>
+
+        </div>
+
+    </div>
+
+<?php endif; ?>
+
 
 <main>
   <h1>Top 10 Leaderboard</h1>
