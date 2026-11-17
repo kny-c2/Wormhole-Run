@@ -216,177 +216,196 @@ include 'header.php';
         Board
     </h2>
 
-    <!-- Player Information -->
+    <div class="game-layout">
 
-    <section class="player-info">
+        <!-- LEFT SIDE: 100 CELL GAME BOARD -->
 
-        <?php foreach ($_SESSION['players'] as $index => $name): ?>
+        <div class="game-board-area">
 
-            <div class="player-card">
+            <section class="game-board">
 
-                <h3>
-                    <?php echo htmlspecialchars($name); ?>
-                </h3>
+                <?php for ($row = 0; $row < 10; $row++): ?>
 
-                <p>
-                    Position:
-                    <?php echo $_SESSION['positions'][$index]; ?>
-                </p>
+                    <?php for ($col = 0; $col < 10; $col++): ?>
 
-                <p>
-                    Rolls:
-                    <?php echo $_SESSION['rolls'][$index]; ?>
-                </p>
+                        <?php
 
-                <?php if ($currentTurn === $index): ?>
-                    <strong>Current Turn</strong>
+                        // Calculate number from bottom of board
+                        $rowFromBottom = 9 - $row;
+
+                        if ($rowFromBottom % 2 === 0) {
+
+                            $cell = ($rowFromBottom * 10) + $col + 1;
+
+                        } else {
+
+                            $cell = ($rowFromBottom * 10) + (10 - $col);
+
+                        }
+
+                        $cellClass = 'board-cell';
+
+                        // Identify special cells
+                        if (isset($board['wormholes'][$cell])) {
+                            $cellClass .= ' wormhole';
+                        }
+
+                        if (isset($board['black_holes'][$cell])) {
+                            $cellClass .= ' black-hole';
+                        }
+
+                        if (in_array($cell, $board['events'], true)) {
+                            $cellClass .= ' event-cell';
+                        }
+
+                        if ($cell === 100) {
+                            $cellClass .= ' finish-cell';
+                        }
+
+                        ?>
+
+                        <div class="<?php echo $cellClass; ?>">
+
+                            <span><?php echo $cell; ?></span>
+
+                            <?php foreach ($_SESSION['positions'] as $index => $position): ?>
+
+                                <?php if ($position === $cell): ?>
+
+                                    <span class="player-token">
+                                        P<?php echo $index + 1; ?>
+                                    </span>
+
+                                <?php endif; ?>
+
+                            <?php endforeach; ?>
+
+                            <?php if (isset($board['wormholes'][$cell])): ?>
+                                <small>W</small>
+                            <?php elseif (isset($board['black_holes'][$cell])): ?>
+                                <small>B</small>
+                            <?php elseif (in_array($cell, $board['events'], true)): ?>
+                                <small>E</small>
+                            <?php endif; ?>
+
+                        </div>
+
+                    <?php endfor; ?>
+
+                <?php endfor; ?>
+
+            </section>
+
+        </div>
+
+
+        <!-- RIGHT SIDE: GAME CONTROLS -->
+
+        <div class="game-sidebar" id="game-controls">
+
+            <!-- Player Information -->
+
+            <section class="player-info">
+
+                <h2>Players</h2>
+
+                <?php foreach ($_SESSION['players'] as $index => $name): ?>
+
+                    <div class="player-card">
+
+                        <h3>
+                            <?php echo htmlspecialchars($name); ?>
+                        </h3>
+
+                        <p>
+                            Position:
+                            <?php echo $_SESSION['positions'][$index]; ?>
+                        </p>
+
+                        <p>
+                            Rolls:
+                            <?php echo $_SESSION['rolls'][$index]; ?>
+                        </p>
+
+                        <?php if ($currentTurn === $index): ?>
+                            <strong>Current Turn</strong>
+                        <?php endif; ?>
+
+                    </div>
+
+                <?php endforeach; ?>
+
+            </section>
+
+
+            <!-- Current Turn and Dice -->
+
+            <section class="game-controls">
+
+                <h2>
+                    <?php echo htmlspecialchars($currentName); ?>'s Turn
+                </h2>
+
+                <?php if ($diceRoll !== null): ?>
+
+                    <h2 class="dice-result">
+                        🎲 Dice Roll: <?php echo $diceRoll; ?>
+                    </h2>
+
                 <?php endif; ?>
 
-            </div>
+                <!-- Game Message -->
 
-        <?php endforeach; ?>
+                <?php if ($message !== ''): ?>
 
-    </section>
+                    <p class="game-message">
+                        <?php echo htmlspecialchars($message); ?>
+                    </p>
 
-    <!-- Dice Result -->
+                <?php endif; ?>
 
-    <?php if ($diceRoll !== null): ?>
+                <!-- Roll Dice Form -->
 
-        <h2>
-            Dice Roll: <?php echo $diceRoll; ?>
-        </h2>
+                <form method="post" action="game.php#game-controls">
 
-    <?php endif; ?>
+                    <input type="hidden" name="action" value="roll">
 
-    <!-- Game Message -->
+                    <button type="submit">
+                        🎲 Roll Dice
+                    </button>
 
-    <?php if ($message !== ''): ?>
+                </form>
 
-        <p class="game-message">
-            <?php echo htmlspecialchars($message); ?>
-        </p>
+            </section>
 
-    <?php endif; ?>
 
-    <!-- 100 Cell Board -->
+            <!-- AI Event History -->
 
-    <section class="game-board">
+            <section class="event-history">
 
-        <?php for ($row = 0; $row < 10; $row++): ?>
+                <h2>AI Event Log</h2>
 
-            <?php for ($col = 0; $col < 10; $col++): ?>
+                <?php if (empty($_SESSION['events_log'])): ?>
 
-                <?php
+                    <p>No special events yet.</p>
 
-                // Calculate number from bottom of board
-                $rowFromBottom = 9 - $row;
+                <?php else: ?>
 
-                if ($rowFromBottom % 2 === 0) {
+                    <?php foreach (array_reverse($_SESSION['events_log']) as $event): ?>
 
-                    $cell = ($rowFromBottom * 10) + $col + 1;
-
-                } else {
-
-                    $cell = ($rowFromBottom * 10) + (10 - $col);
-
-                }
-
-                $cellClass = 'board-cell';
-
-                // Identify special cells
-                if (isset($board['wormholes'][$cell])) {
-                    $cellClass .= ' wormhole';
-                }
-
-                if (isset($board['black_holes'][$cell])) {
-                    $cellClass .= ' black-hole';
-                }
-
-                if (in_array($cell, $board['events'], true)) {
-                    $cellClass .= ' event-cell';
-                }
-
-                if ($cell === 100) {
-                    $cellClass .= ' finish-cell';
-                }
-
-                ?>
-
-                <div class="<?php echo $cellClass; ?>">
-
-                    <span><?php echo $cell; ?></span>
-
-                    <?php foreach ($_SESSION['positions'] as $index => $position): ?>
-
-                        <?php if ($position === $cell): ?>
-
-                            <span class="player-token">
-                                P<?php echo $index + 1; ?>
-                            </span>
-
-                        <?php endif; ?>
+                        <p>
+                            <?php echo htmlspecialchars($event['message']); ?>
+                        </p>
 
                     <?php endforeach; ?>
 
-                    <?php if (isset($board['wormholes'][$cell])): ?>
-                        <small>W</small>
-                    <?php elseif (isset($board['black_holes'][$cell])): ?>
-                        <small>B</small>
-                    <?php elseif (in_array($cell, $board['events'], true)): ?>
-                        <small>E</small>
-                    <?php endif; ?>
+                <?php endif; ?>
 
-                </div>
+            </section>
 
-            <?php endfor; ?>
+        </div>
 
-        <?php endfor; ?>
-
-    </section>
-
-    <!-- Roll Dice Form -->
-
-    <section class="game-controls">
-
-        <h2>
-            <?php echo htmlspecialchars($currentName); ?>'s Turn
-        </h2>
-
-        <form method="post" action="game.php">
-
-            <input type="hidden" name="action" value="roll">
-
-            <button type="submit">
-                Roll Dice
-            </button>
-
-        </form>
-
-    </section>
-
-    <!-- AI Event History -->
-
-    <section class="event-history">
-
-        <h2>AI Event Log</h2>
-
-        <?php if (empty($_SESSION['events_log'])): ?>
-
-            <p>No special events yet.</p>
-
-        <?php else: ?>
-
-            <?php foreach (array_reverse($_SESSION['events_log']) as $event): ?>
-
-                <p>
-                    <?php echo htmlspecialchars($event['message']); ?>
-                </p>
-
-            <?php endforeach; ?>
-
-        <?php endif; ?>
-
-    </section>
+    </div>
 
 </main>
 
