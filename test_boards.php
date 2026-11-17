@@ -27,5 +27,27 @@ foreach ($boards as $difficulty => $board) {
     }
 
 }
+echo "<h2>Board Validation</h2>";
 
+foreach ($boards as $difficulty => $board) {
+
+    $wormholeStarts = array_keys($board['wormholes']);
+    $blackHoleStarts = array_keys($board['black_holes']);
+
+    $allSpecialStarts = array_merge(
+        $wormholeStarts,
+        $blackHoleStarts
+    );
+
+    $duplicates = array_diff_assoc(
+        $allSpecialStarts,
+        array_unique($allSpecialStarts)
+    );
+
+    if (empty($duplicates)) {
+        echo ucfirst($difficulty) . ": No overlapping special cells.<br>";
+    } else {
+        echo ucfirst($difficulty) . ": Overlapping cells found!<br>";
+    }
+}
 ?>
