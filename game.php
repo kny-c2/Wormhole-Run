@@ -168,17 +168,26 @@ if (
 
         if ($_SESSION['positions'][$currentPlayer] >= 100) {
 
+            // Make sure the winning position is exactly 100
             $_SESSION['positions'][$currentPlayer] = 100;
 
+            // Save the winner's information
             $_SESSION['winner'] = $currentPlayer;
 
-            // Record the winner
-            $_SESSION['scores'][] = [
+            // Create a record of the winning player
+            $winnerResult = [
                 'name' => $playerName,
                 'rolls' => $_SESSION['rolls'][$currentPlayer],
                 'difficulty' => $difficulty
             ];
 
+            // Save the winner for the victory popup
+            $_SESSION['winner_result'] = $winnerResult;
+
+            // Add the winner to the leaderboard
+            $_SESSION['scores'][] = $winnerResult;
+
+            // Redirect to the leaderboard
             header('Location: leaderboard.php');
             exit;
 

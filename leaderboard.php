@@ -2,16 +2,22 @@
 session_start();
 require 'auth.php';
 
-// Scores live in the session
+// Retrieve saved scores
 $scores = $_SESSION['scores'] ?? [];
 
 // Sort by fewest rolls first
 usort($scores, function ($a, $b) {
-    return $a['rolls'] - $b['rolls'];
+    return $a['rolls'] <=> $b['rolls'];
 });
 
 // Keep only the top 10
 $top = array_slice($scores, 0, 10);
+
+// Retrieve the latest winner for the popup
+$winnerResult = $_SESSION['winner_result'] ?? null;
+
+// Prevent the popup from appearing again after refresh
+unset($_SESSION['winner_result']);
 
 include 'header.php';
 ?>
